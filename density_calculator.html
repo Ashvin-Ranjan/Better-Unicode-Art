@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<head>
+</head>
+<body>
+    <canvas width="50" height="50" id="canvas"></canvas>
+    <script>
+        const client = new XMLHttpRequest();
+        client.open("GET", "./characters.txt")
+
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        ctx.textBaseline = 'top'
+        ctx.font = "50px sans-serif";
+
+        const character_data = {}
+        
+        const text = "<Character List>" // This is removed from being uploaded to github for readability reasons
+            // If you want to run this yourself then copy the text from sorted_characters.txt into <Character List>
+        
+        const text_len = text.length
+        let current_count = 1
+
+        for (let char of text) {
+            let count = 0;
+
+            ctx.fillText(char, 0, 0);
+            const image_data = ctx.getImageData(0, 0, canvas.width, canvas.height).data
+
+            for (let i = 3; i < image_data.length; i += 4) {
+                if (image_data[i] != 0) {
+                    count += 1;
+                }
+            }
+            character_data[char] = count
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            console.log(`${char}: ${count} (${current_count}/${text_len})`)
+            current_count += 1
+        }
+        console.log(JSON.stringify(character_data))
+    </script>
+</body>
