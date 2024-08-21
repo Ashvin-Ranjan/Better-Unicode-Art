@@ -1,3 +1,7 @@
+## Note
+
+The below example is best viewed on a monitor due to the fact that it is 60 characters across.
+
 ## Input
 ![Example Image](example/image.png)
 
